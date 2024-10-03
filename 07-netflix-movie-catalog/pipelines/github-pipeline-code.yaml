@@ -1,0 +1,47 @@
+name: Netflix Movie Catalog Service Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  EC2_PUBLIC_ADDRESS: ai-tsadok-3.devops-days-upes.com
+  EC2_USER_NAME: ubuntu
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} 
+  TARGET_DIR: /home/ubuntu/NetflixMovieCatalog_4
+  PRIVATE_KEY_PATH: private_key.pem
+
+jobs:
+  
+  Deploy:
+
+    name: Deploy in AWS EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the app code
+        uses: actions/checkout@v2
+
+      - name: Setup SSH Key
+        run: |
+          rm -f ${{ env.PRIVATE_KEY_PATH }}
+
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ${{ env.PRIVATE_KEY_PATH }}
+          chmod 400 ${{ env.PRIVATE_KEY_PATH }}
+
+      - name: List files in EC2 instance
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ${{ env.PRIVATE_KEY_PATH }} ${{ env.EC2_USER_NAME }}@${{ env.EC2_PUBLIC_ADDRESS }} "ls -la ~/"
+
+      - name: Copy files to EC2 instance
+        run: |
+
+          ssh -o StrictHostKeyChecking=no -i ${{ env.PRIVATE_KEY_PATH }} ${{ env.EC2_USER_NAME }}@${{ env.EC2_PUBLIC_ADDRESS }} "mkdir -p ${{ env.TARGET_DIR }}"
+          scp -o StrictHostKeyChecking=no -i ${{ env.PRIVATE_KEY_PATH }} -r * ${{ env.EC2_USER_NAME }}@${{ env.EC2_PUBLIC_ADDRESS }}:${{ env.TARGET_DIR }}
+          ssh -o StrictHostKeyChecking=no -i ${{ env.PRIVATE_KEY_PATH }} ${{ env.EC2_USER_NAME }}@${{ env.EC2_PUBLIC_ADDRESS }} "ls -la ${{ env.TARGET_DIR }}"
+
+      - name: Execute deployment script
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ${{ env.PRIVATE_KEY_PATH }} ${{ env.EC2_USER_NAME }}@${{ env.EC2_PUBLIC_ADDRESS }} "bash cd ${{ env.TARGET_DIR }};./deploy.sh"
+
