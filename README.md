@@ -19,3 +19,6 @@ CI/CD Pipeline:
 Implementing a pipeline using GitHub Actions for automatic deployment.
 Docker:
 Containerizing the application using Docker.
+
+![Alt text](https://github.com/ishaanntyagi/DevOps-bootcamp-NetflixFrontend/blob/main/WhatsApp%20Image%202024-10-04%20at%2001.48.43_6cc1307f.jpg)
+
