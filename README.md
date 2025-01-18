@@ -21,6 +21,7 @@ Docker:
 Containerizing the application using Docker.
 
 ![Alt text](https://github.com/ishaanntyagi/DevOps-bootcamp-NetflixFrontend/blob/main/WhatsApp%20Image%202024-10-04%20at%2001.48.43_6cc1307f.jpg)
-![Alt Text](WhatsApp Image 2024-10-04 at 01.48.18_a42c7d15.jpg)
+
+![Alt text](https://github.com/ishaanntyagi/DevOps-bootcamp-NetflixFrontend/blob/60f862760ea33456d666cd038d6f448390a299c9/WhatsApp%20Image%202024-10-04%20at%2001.48.18_a42c7d15.jpg)
 
 
